@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+  
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "8027:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8026:8080
+volumes:
+  db_data:
